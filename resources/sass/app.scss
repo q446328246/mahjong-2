@@ -1,0 +1,17 @@
+
+// Fonts
+//@import url('https://fonts.googleapis.com/css?family=Nunito');
+//@import url("https://fonts.googleapis.com/css?family=M+PLUS+1p");
+// Variables
+@import 'variables';
+
+// Bootstrap
+@import '~bootstrap/scss/bootstrap';
+
+body{
+  font-family: 'Shadows Into Light', cursive;
+}
+.navbar-laravel {
+  background-color: #fff;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.04);
+}
