@@ -9,6 +9,7 @@
             </div>
             <div class="col-11 text-left">
                 <HaipaiComp
+                    class_name="wining-result-haipai"
                     :tiles=q_tiles
                 ></HaipaiComp>
             </div>
