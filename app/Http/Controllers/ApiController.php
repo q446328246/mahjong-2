@@ -6,6 +6,7 @@ use App\Models\SelectTileQuestionsDetail;
 use App\Models\SelectTileQuestionsList;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Log;
 
 class ApiController extends Controller
 {
@@ -20,6 +21,8 @@ class ApiController extends Controller
     //            ->orderByRaw('RAND()')
     //            ->limit($volume)
                 ->get();
+
+
 
             $response = [];
             foreach ($Questions as $key => $Question) {
@@ -42,6 +45,7 @@ class ApiController extends Controller
             }
         } catch (\Exception $e) {
             Log::warning($e->getMessage());
+            $response = 'システムエラーが発生しました。';
         }
 
         return $response;
