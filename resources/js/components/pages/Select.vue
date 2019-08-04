@@ -122,18 +122,11 @@
 
 
 
-        <div class="tehai">
-            <HaipaiComp
-                :tiles=tehai_tiles
-                class_name="select-tehai"
-            ></HaipaiComp>
+        <SelectTehaiComp
+            :tehai_tiles=tehai_tiles
 
-            <p>ツモ牌</p>
-            <HaiComp
-                :tile=selectQuestionDetail.tumo_tile
-                class_name="select-dora"
-            ></HaiComp>
-        </div>
+        ></SelectTehaiComp>
+
 
         <div class="btn-box">
             <a href="/select_tile/top" class="btn btn-primary">TOPに戻る</a>
@@ -143,6 +136,7 @@
 
 <script>
     import 'es6-promise/auto'
+    import SelectTehaiComp from '../organism/SelectTehai'
     import Header from '../molecules/header'
     import HaipaiComp from '../molecules/Haipai'
     import KawahaiComp from '../molecules/Kawahai'
@@ -152,7 +146,7 @@
     export default {
         name: "Select",
         components: {
-            Header,HaipaiComp,HaiComp, KawahaiComp
+            SelectTehaiComp, Header, HaipaiComp, HaiComp, KawahaiComp
         },
 
         created() {
