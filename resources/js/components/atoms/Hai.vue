@@ -28,7 +28,7 @@
 
     .select-tehai {
         width: 5.5%;
-        margin: 0 2px;
+        margin: 0 4px;
     }
 
 
@@ -49,5 +49,8 @@
         width: 30.5%
     }
 
+    .wining-result-haipai {
+        width: 7.5%
+    }
 
 </style>

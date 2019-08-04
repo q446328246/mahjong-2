@@ -29,13 +29,19 @@
 
     export default {
         name: "Top",
+
+        created() {
+            this.clearState()
+        },
+
         components: {
             Header,
         },
 
         methods: {
             ...mapActions('Wining', [
-                'letsWiningTile'
+                'letsWiningTile',
+                'clearState'
             ])
         }
     }

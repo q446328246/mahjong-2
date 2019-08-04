@@ -72,7 +72,23 @@ const mutations = {
     clearCounter(state) {
         state.counter = 0
         clearInterval(state.timerId)
+    },
+    initialState(state) {
+            state.level = 0
+            state.status =  0
+            state.questions = []
+            state.answers = []
+            state.question_now_cnt = 1
+            state.question_amt = 3
+            state.correct = []
+            state.ans_num = []
+            state.ans_picked= 0
+            state.error = ''
+            state.timer_flg = false
+            state.timerId = null
+            state.counter = ''
     }
+
 }
 
 // getters
@@ -251,6 +267,10 @@ const actions = {
 
     destroyTimer({ commit,state }) {
         commit('clearCounter')
+    },
+
+    clearState({ commit,state }) {
+        commit('initialState')
     }
 }
 
