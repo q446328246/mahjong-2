@@ -1,6 +1,6 @@
 <div class="qustion-tiles">
     <div id="question-tile-set"></div>
-    <button type="button" id="reset">リセット</button>
+    <text class="btn btn-primary" id="reset">リセット</text>
     <div class="tiles">
         <div id="manzu">
             <p>萬子</p>
