@@ -262,7 +262,7 @@
     .kawa.kami {
         position: absolute;
         top: 35%;
-        left: -8%;
+        left: -4%;
         width: 50%;
     }
     .kawa.me {
@@ -274,7 +274,7 @@
     .kawa.shimo {
         position: absolute;
         top: 35%;
-        right: -8%;
+        left: 52%;
         width: 50%;
     }
 

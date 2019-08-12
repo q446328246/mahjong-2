@@ -9,6 +9,7 @@ export const state = {
     selectQuestion: '',
     selectResults: [],
     selectQuestionDetail: '',
+    ans_picked: 0,
 }
 
 // mutations
@@ -41,6 +42,9 @@ const mutations = {
     },
     setSelectQuestionDetail (state, QuestionDetail){
         state.selectQuestionDetail = QuestionDetail
+    },
+    setAnsPicked(state, pick_val) {
+        state.ans_picked = pick_val
     },
 }
 
