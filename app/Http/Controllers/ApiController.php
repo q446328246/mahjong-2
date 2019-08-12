@@ -18,6 +18,7 @@ class ApiController extends Controller
 
         try {
             $Questions = DB::table('wining_lv1_questions')
+                ->where('deleted_at', null)
     //            ->orderByRaw('RAND()')
     //            ->limit($volume)
                 ->get();
