@@ -9,7 +9,7 @@ export const state = {
     selectQuestion: '',
     selectResults: [],
     selectQuestionDetail: '',
-    ans_picked: 0,
+    ans_picked: '',
 }
 
 // mutations
@@ -155,30 +155,31 @@ const actions = {
         commit('setAnsPicked', payload)
     },
 
-    answerAction ({ commit,state,dispatch }) {
-        if (state.level === 2) {
-            commit('clearCounter')
-        }
+    async answerAction ({ commit,state,dispatch,getters }) {
         dispatch('clearSelected')
-        let correct_flg = false
-        if (state.ans_picked !== 0) {
-            var Answers = state.answers[state.question_now_cnt - 1]
-            for(var i = 0; i < Answers.length; i++) {
-                if (i === state.ans_picked - 1) {
-                    if (Answers[i].correct === 1) {
-                        correct_flg = true
-                        commit('setCorrect')
-                    }
-
-                    break
-                }
+        if (state.ans_picked !== '') {
+            let answer = '';
+            // つも牌なら、tumo_tileデータをそのまま
+            if (state.ans_picked === 14) {
+                answer = state.selectQuestionDetail.tumo_tile
+            } else {
+                let tehai_tiles = getters.splitTiles('tehai')
+                answer = tehai_tiles[state.ans_picked]
             }
 
-            if (!correct_flg) {
-                commit('setIncorrect')
+            let data = {
+                'question': state.selectQuestion,
+                'answer': answer,
             }
 
-            commit('changeStatus')
+            await axios.post('/post_select', data).then(function(response) {
+                console.log(response)
+            }.bind(this))
+            .catch(function (error) {
+                // 異常
+                console.log('ERROR!! post error.')
+                console.log(error)
+            }.bind(this))
         } else {
             alert('選択されていません')
         }
@@ -237,19 +238,6 @@ const getters = {
             return eval('state.selectQuestionDetail.' + key).split('.')
         }
     },
-
-    // splitTehaiTiles: (state, getters) => key =>  {
-    //     let arrTiles = getters.splitTiles('tehai')
-    //     let tumo_hai = arrTiles[arrTiles.length-1].split(' ')
-    //     console.log(tumo_hai[1])
-    //     console.log(arrTiles)
-    //     let tehai_tiles = arrTiles.push(tumo_hai[1])
-    //
-    //     console.log(tehai_tiles)
-    //
-    //     return tehai_tiles
-    //
-    // },
 
     getPlaceAndStation(state)  {
         if (state.selectQuestionDetail !== undefined && state.selectQuestionDetail !== '') {

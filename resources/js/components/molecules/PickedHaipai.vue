@@ -37,7 +37,7 @@
                 })
                 $(event.currentTarget).addClass("selected")
 
-                this.$emit('picked', index + 1)
+                this.$emit('picked', index)
             },
         },
 

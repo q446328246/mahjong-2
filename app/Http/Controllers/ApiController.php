@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\SelectTileQuestionsDetail;
 use App\Models\SelectTileQuestionsList;
+use App\Models\SelectTileResult;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Log;
@@ -78,6 +79,24 @@ class ApiController extends Controller
         try {
             $response = [];
             $response = SelectTileQuestionsDetail::where('question_id',$id)->get();
+
+        } catch (\Exception $e) {
+            Log::warning($e->getMessage());
+        }
+
+        return $response;
+    }
+
+
+    public function postSelectAnswer(Request $request) {
+        try {
+            $response = [];
+            $response = SelectTileResult::create([
+                'answer' => $request['answer'],
+                'question_id' => $request['question']['id'],
+                'comment' => '',
+                'display' => false,
+            ]);
 
         } catch (\Exception $e) {
             Log::warning($e->getMessage());

@@ -15,7 +15,6 @@
                 class_name="select-dora"
             ></HaiComp>
         </div>
-
     </div>
 
 </template>
@@ -46,7 +45,7 @@
         },
 
         methods: {
-            ...mapActions('Wining', [
+            ...mapActions('Select', [
                 'pickedAns'
             ]),
 

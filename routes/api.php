@@ -25,23 +25,6 @@ Route::get('qa.json/{id}', 'QAController@index');
 
 
 Route::group(['middleware' => 'api'],function(){
-//     // 記事を投稿す処理
-//     Route::post('/article/{id}',function($id){
-//         //投稿するユーザーを取得
-//         $user = App\User::where('id',$id)->first();
-
-//         //リクエストデータを元に記事を作成
-//         $article = new App\Article();
-//         $article->title = request('title');
-//         $article->content = request('content');
-
-//         //ユーザーに関連づけて保存
-//         $user->articles()->save($article);
-
-//         //テストのためtitile、contentのデータをリターン
-//         return ['title' => request('title'),'content' => request('content')];
-//     });
-
 
 
 });

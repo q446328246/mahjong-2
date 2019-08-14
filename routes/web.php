@@ -22,6 +22,7 @@ Route::get('/', function () {
 Route::get('get_wining_qa/{level}', 'ApiController@getWiningQA');
 Route::get('get_select_questions', 'ApiController@getSelectTopQuestions');
 Route::get('get_select_question_detail/{id}', 'ApiController@getSelectQuestionDetail');
+Route::post('post_select', 'ApiController@postSelectAnswer');
 
 // 管理者画面
 //Auth::routes();

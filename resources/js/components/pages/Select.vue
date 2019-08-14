@@ -124,12 +124,12 @@
 
         <SelectTehaiComp
             :tehai_tiles=tehai_tiles
-
         ></SelectTehaiComp>
 
 
         <div class="btn-box">
             <a href="/select_tile/top" class="btn btn-primary">TOPに戻る</a>
+            <button @click="Answer" type="button" class="btn btn-primary">回答</button>
         </div>
     </div>
 </template>
@@ -155,7 +155,12 @@
 
         methods: {
             ...mapActions('Select', [
+                'answerAction'
             ]),
+
+            Answer: function () {
+                this.answerAction()
+            },
         },
 
         computed: {
