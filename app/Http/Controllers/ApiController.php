@@ -90,16 +90,25 @@ class ApiController extends Controller
 
     public function postSelectAnswer(Request $request) {
         try {
-            $response = [];
-            $response = SelectTileResult::create([
+            $SelectTileResult = SelectTileResult::create([
                 'answer' => $request['answer'],
                 'question_id' => $request['question']['id'],
                 'comment' => '',
                 'display' => false,
             ]);
 
+            $response = DB::table('select_tile_results')
+                        ->select('answer as hai', DB::raw('count(*) as count'), 'comment', 'display')
+                        ->where('question_id', '=', $request['question']['id'])
+                        ->groupBy('answer')
+                        ->get();
+
+
+
         } catch (\Exception $e) {
             Log::warning($e->getMessage());
+
+            $response = false;
         }
 
         return $response;

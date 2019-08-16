@@ -126,6 +126,8 @@
             :tehai_tiles=tehai_tiles
         ></SelectTehaiComp>
 
+        <SelectResultChartComp></SelectResultChartComp>
+
 
         <div class="btn-box">
             <a href="/select_tile/top" class="btn btn-primary">TOPに戻る</a>
@@ -137,6 +139,7 @@
 <script>
     import 'es6-promise/auto'
     import SelectTehaiComp from '../organism/SelectTehai'
+    import SelectResultChartComp from '../organism/SelectResultChart'
     import Header from '../molecules/header'
     import HaipaiComp from '../molecules/Haipai'
     import KawahaiComp from '../molecules/Kawahai'
@@ -146,7 +149,7 @@
     export default {
         name: "Select",
         components: {
-            SelectTehaiComp, Header, HaipaiComp, HaiComp, KawahaiComp
+            SelectResultChartComp,SelectTehaiComp, Header, HaipaiComp, HaiComp, KawahaiComp
         },
 
         created() {

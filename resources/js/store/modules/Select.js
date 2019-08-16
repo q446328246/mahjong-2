@@ -3,13 +3,17 @@ import router from '../../router'
 
 export const state = {
     question_id: 0,
-    status: 0, // 0→回答選択、1→解答ページ、2→結果ページへ
+    status: 0, // 0→回答選択、1→解答
     questions: [],
     ans_cnt: [],
     selectQuestion: '',
     selectResults: [],
     selectQuestionDetail: '',
     ans_picked: '',
+    selectResultChart: {
+        'hai': ['1mnz','3mnz','4mnz','ton'],
+        'count': [50,3,3,2],
+    },
 }
 
 // mutations
@@ -17,16 +21,8 @@ const mutations = {
     setSelectQuestionId (state, question_id) {
         state.question_id = question_id
     },
-    changeStatus (state) {
-        if (state.status === 0) {
-            if (state.question_amt !== state.question_now_cnt) {
-                state.status = 1
-            } else {
-                state.status = 2
-            }
-        } else {
-            state.status = 0
-        }
+    changeStatus (state, status) {
+        state.status = status
     },
     setQuestions (state, questions) {
         state.questions = questions
@@ -45,6 +41,9 @@ const mutations = {
     },
     setAnsPicked(state, pick_val) {
         state.ans_picked = pick_val
+    },
+    setSelectResultChart(state, ResultChart) {
+        state.selectResultChart = ResultChart
     },
 }
 
@@ -173,7 +172,14 @@ const actions = {
             }
 
             await axios.post('/post_select', data).then(function(response) {
-                console.log(response)
+                console.log(response.data)
+                if (response.data !== false) {
+                    commit('setStatus', 1)
+                    commit('setSelectResultChart',  response.data)
+                } else {
+                    alert('エラーが発生しました。再度、お試しください。')
+                }
+
             }.bind(this))
             .catch(function (error) {
                 // 異常
@@ -205,29 +211,6 @@ const actions = {
     moveResult () {
         router.push({name: 'Wining_Result'})
     },
-
-    setTimer({ commit,state,dispatch }) {
-        if (state.level === 2) {
-            commit('setCounterTime', 3)
-        }
-        state.timerId = setInterval(function () {
-            commit('decrementCounter')
-
-            // 時間切れ処理
-            if (state.counter === 0) {
-                alert('時間切れ')
-                commit('setAnsPicked', 0)
-                commit('setIncorrect')
-                commit('changeStatus')
-                commit('clearCounter')
-                dispatch('clearSelected')
-            }
-        }, 1000)
-    },
-
-    destroyTimer({ commit,state }) {
-        commit('clearCounter')
-    }
 }
 
 
