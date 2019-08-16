@@ -42,9 +42,8 @@
             'answers',
         ],
 
-        data: function() {
-            return {
-            }
+        data: {
+            status: 0,
         },
 
         created() {

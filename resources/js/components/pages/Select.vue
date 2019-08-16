@@ -126,12 +126,17 @@
             :tehai_tiles=tehai_tiles
         ></SelectTehaiComp>
 
+        <div v-if="status == 1">
         <SelectResultChartComp></SelectResultChartComp>
-
+        </div>
 
         <div class="btn-box">
             <a href="/select_tile/top" class="btn btn-primary">TOPに戻る</a>
-            <button @click="Answer" type="button" class="btn btn-primary">回答</button>
+            <button
+                v-if="status == 0"
+                @click="Answer"
+                type="button"
+                class="btn btn-primary">回答</button>
         </div>
     </div>
 </template>
@@ -153,7 +158,13 @@
         },
 
         created() {
+            this.status = 0
+        },
 
+        data: function() {
+            return {
+                status: 0,
+            }
         },
 
         methods: {
@@ -162,6 +173,7 @@
             ]),
 
             Answer: function () {
+                this.status = 1
                 this.answerAction()
             },
         },
