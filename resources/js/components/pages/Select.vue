@@ -138,6 +138,21 @@
                 type="button"
                 class="btn btn-primary">回答</button>
         </div>
+
+        <!-- モーダルウィンドウコンポーネント -->
+        <ModalComp @close="closeModal" v-if="modal">
+            <h3 slot="header">選択牌理由</h3>
+            <div slot="body">
+                選んだ牌
+                <button
+                    type="button"
+                    class="btn btn-warning"
+                    @click="">
+                    回答
+                </button>
+            </div>
+            <!-- /footer -->
+        </ModalComp>
     </div>
 </template>
 
@@ -149,12 +164,13 @@
     import HaipaiComp from '../molecules/Haipai'
     import KawahaiComp from '../molecules/Kawahai'
     import HaiComp from '../atoms/Hai'
+    import ModalComp from '../atoms/Modal'
     import { mapState, mapActions, mapGetters } from 'vuex'
 
     export default {
         name: "Select",
         components: {
-            SelectResultChartComp,SelectTehaiComp, Header, HaipaiComp, HaiComp, KawahaiComp
+            SelectResultChartComp,SelectTehaiComp, Header, HaipaiComp, HaiComp, KawahaiComp,ModalComp
         },
 
         created() {
@@ -164,6 +180,8 @@
         data: function() {
             return {
                 status: 0,
+                modal: false,
+
             }
         },
 
@@ -173,8 +191,13 @@
             ]),
 
             Answer: function () {
-                this.status = 1
+                // this.status = 1
+                this.modal = true
                 this.answerAction()
+            },
+
+            closeModal() {
+                this.modal = false
             },
         },
 

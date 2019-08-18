@@ -33,7 +33,7 @@
 
         computed: {
             ...mapState('Select', [
-                'selectResult'
+                'selectResultChart'
             ]),
         },
 
@@ -42,11 +42,11 @@
             // this.renderChart(this.chartData, this.options)
             this.renderChart(
                 {
-                    labels: this.selectResult.hai,
+                    labels: this.selectResultChart.hai,
                     datasets: [{
                         label: 'sample',
                         backgroundColor: ['rgba(255, 20, 20, 0.3)', '#f87979'],
-                        data: this.selectResult.count
+                        data: this.selectResultChart.count
                     }],
                     options: {
                         title: {
