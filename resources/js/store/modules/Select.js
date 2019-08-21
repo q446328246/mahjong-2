@@ -1,5 +1,6 @@
 import axios from 'axios'
 import router from '../../router'
+import constant from '../../constants/constant'
 
 export const state = {
     question_id: 0,
@@ -11,9 +12,14 @@ export const state = {
     selectQuestionDetail: '',
     ans_picked: '',
     selectResultChart: {
-        'hai': ['1mnz','3mnz','4mnz','ton'],
-        'count': [50,3,3,2],
+        'hai': [
+            '1mnz', '3mnz','4mnz','ton'
+        ],
+        'count': [
+            50,3,3,2
+        ],
     },
+    selectResultComment :[]
 }
 
 // mutations
@@ -174,8 +180,17 @@ const actions = {
             await axios.post('/post_select', data).then(function(response) {
                 console.log(response.data)
                 if (response.data !== false) {
-                    commit('setStatus', 1)
-                    commit('setSelectResultChart',  response.data)
+                    let ResultHais = []
+                    let ResultCounts = []
+                    let Answers = response.data.answer
+
+                    // グラフ生成に使用するhaiとcountを保持
+                    for (let i = 0;i < Answers.length;i++) {
+                        ResultHais.push(Answers[i].hai)
+                        ResultCounts.push(Answers[i].count)
+                    }
+                    commit('setSelectResultChart',  {ResultHais, ResultCounts})
+                    commit('setSelectResultAnswer',  response.data)
                 } else {
                     alert('エラーが発生しました。再度、お試しください。')
                 }
