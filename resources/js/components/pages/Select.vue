@@ -127,14 +127,16 @@
         ></SelectTehaiComp>
 
         <div v-if="status == 1">
-        <SelectResultChartComp></SelectResultChartComp>
+        <SelectResultChartComp
+            v-if="chart_render"
+        ></SelectResultChartComp>
         </div>
 
         <div class="btn-box">
             <a href="/select_tile/top" class="btn btn-primary">TOPに戻る</a>
             <button
                 v-if="status == 0"
-                @click="Answer"
+                @click="modal = true"
                 type="button"
                 class="btn btn-primary">回答</button>
         </div>
@@ -144,10 +146,17 @@
             <h3 slot="header">選択牌理由</h3>
             <div slot="body">
                 選んだ牌
+                <HaiComp
+                    :tile=tehai_tiles[ans_picked]
+                    class_name="wining_ans"
+                ></HaiComp>
+
+                <textarea v-model="comment" class="form-control mb-2" rows="3" placeholder="選んだ牌の理由を記入してください。（任意）"></textarea>
+
                 <button
                     type="button"
                     class="btn btn-warning"
-                    @click="">
+                    @click="Answer">
                     回答
                 </button>
             </div>
@@ -181,7 +190,8 @@
             return {
                 status: 0,
                 modal: false,
-
+                // modal: true,
+                comment: '',
             }
         },
 
@@ -190,10 +200,10 @@
                 'answerAction'
             ]),
 
-            Answer: function () {
-                // this.status = 1
-                this.modal = true
-                this.answerAction()
+             Answer: function () {
+                this.status = 1
+                this.answerAction(this.comment)
+                this.closeModal()
             },
 
             closeModal() {
@@ -203,7 +213,10 @@
 
         computed: {
             ...mapState('Select', [
-                'selectQuestion', 'selectQuestionDetail'
+                'selectQuestion',
+                'selectQuestionDetail',
+                'ans_picked',
+                'chart_render'
             ]),
 
             ...mapGetters('Select', [

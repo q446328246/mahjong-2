@@ -93,8 +93,8 @@ class ApiController extends Controller
 //            $SelectTileResult = SelectTileResult::create([
 //                'answer' => $request['answer'],
 //                'question_id' => $request['question']['id'],
-//                'comment' => '',
-//                'display' => false,
+//                'comment' => !empty($request['comment']) ?? '',
+//                'display' => 0,
 //            ]);
 
             $response['answer'] = DB::table('select_tile_results')

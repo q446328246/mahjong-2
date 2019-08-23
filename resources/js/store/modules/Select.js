@@ -19,7 +19,9 @@ export const state = {
             50,3,3,2
         ],
     },
-    selectResultComment :[]
+    chart_render: false,
+    selectResultComment :[],
+    selectResultAnswer: [],
 }
 
 // mutations
@@ -50,6 +52,12 @@ const mutations = {
     },
     setSelectResultChart(state, ResultChart) {
         state.selectResultChart = ResultChart
+    },
+    setChartRender(state, bool) {
+        state.chart_render = bool
+    },
+    setSelectResultAnswer(state, ResultAnswer) {
+        state.selectResultAnswer = ResultAnswer
     },
 }
 
@@ -160,7 +168,7 @@ const actions = {
         commit('setAnsPicked', payload)
     },
 
-    async answerAction ({ commit,state,dispatch,getters }) {
+    async answerAction ({ commit,state,dispatch,getters }, comment) {
         dispatch('clearSelected')
         if (state.ans_picked !== '') {
             let answer = '';
@@ -175,22 +183,23 @@ const actions = {
             let data = {
                 'question': state.selectQuestion,
                 'answer': answer,
+                'comment': comment
             }
 
             await axios.post('/post_select', data).then(function(response) {
-                console.log(response.data)
                 if (response.data !== false) {
-                    let ResultHais = []
-                    let ResultCounts = []
+                    let Hais = []
+                    let Counts = []
                     let Answers = response.data.answer
 
                     // グラフ生成に使用するhaiとcountを保持
                     for (let i = 0;i < Answers.length;i++) {
-                        ResultHais.push(Answers[i].hai)
-                        ResultCounts.push(Answers[i].count)
+                        Hais.push(Answers[i].hai)
+                        Counts.push(Answers[i].count)
                     }
-                    commit('setSelectResultChart',  {ResultHais, ResultCounts})
+                    commit('setSelectResultChart',  {Hais, Counts})
                     commit('setSelectResultAnswer',  response.data)
+                    commit('setChartRender', true)
                 } else {
                     alert('エラーが発生しました。再度、お試しください。')
                 }
