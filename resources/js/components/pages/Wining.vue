@@ -1,5 +1,5 @@
 <template>
-    <div >
+    <div>
         <Header text="待ち牌当て"></Header>
         <div>
             待ち牌当て

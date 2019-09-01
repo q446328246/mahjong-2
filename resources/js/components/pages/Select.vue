@@ -126,10 +126,19 @@
             :tehai_tiles=tehai_tiles
         ></SelectTehaiComp>
 
+
+        <!-- 解答フィールド -->
         <div v-if="status == 1">
-        <SelectResultChartComp
-            v-if="chart_render"
-        ></SelectResultChartComp>
+            <div class="row">
+                <div v-for=""
+                <div class="col-4">
+
+                </div>
+
+            </div>
+            <SelectResultChartComp
+                v-if="chart_render"
+            ></SelectResultChartComp>
         </div>
 
         <div class="btn-box">

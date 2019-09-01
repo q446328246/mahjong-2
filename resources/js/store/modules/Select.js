@@ -4,7 +4,6 @@ import constant from '../../constants/constant'
 
 export const state = {
     question_id: 0,
-    status: 0, // 0→回答選択、1→解答
     questions: [],
     ans_cnt: [],
     selectQuestion: '',
@@ -28,9 +27,6 @@ export const state = {
 const mutations = {
     setSelectQuestionId (state, question_id) {
         state.question_id = question_id
-    },
-    changeStatus (state, status) {
-        state.status = status
     },
     setQuestions (state, questions) {
         state.questions = questions
