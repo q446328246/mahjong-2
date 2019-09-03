@@ -186,7 +186,7 @@ const actions = {
                 if (response.data !== false) {
                     let Hais = []
                     let Counts = []
-                    let Answers = response.data.answer
+                    let Answers = response.data
 
                     // グラフ生成に使用するhaiとcountを保持
                     for (let i = 0;i < Answers.length;i++) {

@@ -130,7 +130,7 @@
         <!-- 解答フィールド -->
         <div v-if="status == 1">
             <div class="row">
-                <div v-for=""
+<!--                <div v-for=""-->
                 <div class="col-4">
 
                 </div>
@@ -144,7 +144,7 @@
         <div class="btn-box">
             <a href="/select_tile/top" class="btn btn-primary">TOPに戻る</a>
             <button
-                v-if="status == 0"
+                v-if="status == 0 && ans_picked !== ''"
                 @click="modal = true"
                 type="button"
                 class="btn btn-primary">回答</button>
