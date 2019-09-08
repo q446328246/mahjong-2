@@ -144,7 +144,7 @@ class WiningController extends AdminController
         $form = new Form(new WiningLv1Question);
 
         $form->display('id', __('ID'));
-        $form->hidden('question', '問題');
+        $form->text('question', '問題');
 
         $TileSetBox = new Box(
             '問題雀牌セット',
