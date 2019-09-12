@@ -20,7 +20,7 @@ export const state = {
     },
     chart_render: false,
     selectResultComment :[],
-    selectResultAnswer: [],
+    selectResultAnswers: [],
 }
 
 // mutations
@@ -53,7 +53,7 @@ const mutations = {
         state.chart_render = bool
     },
     setSelectResultAnswer(state, ResultAnswer) {
-        state.selectResultAnswer = ResultAnswer
+        state.selectResultAnswers = ResultAnswer
     },
 }
 
@@ -219,7 +219,7 @@ const actions = {
         })
     },
 
-    setNextQuestion ({ commit,state,dispatch }) {
+    setPickedHaiComment ({ commit,state,dispatch }) {
         commit('incrimentQuestionCnt')
         commit('changeStatus')
         commit('clearAnsPicked')
