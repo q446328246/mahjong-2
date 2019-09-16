@@ -128,13 +128,33 @@
 
 
         <!-- 解答フィールド -->
-        <div v-if="status == 1">
-            <div class="row">
-<!--                <div v-for=""-->
-                <div class="col-4">
-
+        <div v-if="status == 1" class="container">
+            <div>
+                <div
+                    v-for="(Answer, index) in selectResultAnswers"
+                    :key="index"
+                    class="row"
+                >
+                    <div class="col-2">
+                        第{{ index + 1 }}位
+                    </div>
+                    <div class="col-6">
+                    <HaiComp
+                        :tile=Answer.hai
+                        class_name="select-kawa"
+                    ></HaiComp>
+                    </div>
+                    <div class="col-2">
+                        {{ Answer.count }}票
+                    </div>
+                    <div class="col-2" v-if="Answer.is_comment">
+                        <button
+                            type="button"
+                            class="btn btn-primary"
+                            @click="showComment"
+                        >コメントを見る</button>
+                    </div>
                 </div>
-
             </div>
             <SelectResultChartComp
                 v-if="chart_render"
@@ -150,7 +170,7 @@
                 class="btn btn-primary">回答</button>
         </div>
 
-        <!-- モーダルウィンドウコンポーネント -->
+        <!--　解答時、モーダルウィンドウコンポーネント -->
         <ModalComp @close="closeModal" v-if="modal">
             <h3 slot="header">選択牌理由</h3>
             <div slot="body">
@@ -167,6 +187,30 @@
                     class="btn btn-warning"
                     @click="Answer">
                     回答
+                </button>
+            </div>
+            <!-- /footer -->
+        </ModalComp>
+
+        <!-- コメント表示時、モーダルウィンドウコンポーネント -->
+        <ModalComp @close="closeCommentModal" v-if="comment_modal">
+            <h3 slot="header">投票コメント</h3>
+            <div slot="body">
+                選んだ牌
+                <HaiComp
+                        :tile=tehai_tiles[ans_picked]
+                        class_name="wining_ans"
+                ></HaiComp>
+
+                <div class="comment" v-for="">
+
+                </div>
+
+                <button
+                        type="button"
+                        class="btn btn-warning"
+                        @click="comment_modal = false">
+                    閉じる
                 </button>
             </div>
             <!-- /footer -->
@@ -199,6 +243,7 @@
             return {
                 status: 0,
                 modal: false,
+                comment_modal:false,
                 // modal: true,
                 comment: '',
             }
@@ -218,6 +263,10 @@
             closeModal() {
                 this.modal = false
             },
+
+            showComment() {
+
+            }
         },
 
         computed: {
@@ -225,7 +274,8 @@
                 'selectQuestion',
                 'selectQuestionDetail',
                 'ans_picked',
-                'chart_render'
+                'chart_render',
+                'selectResultAnswers'
             ]),
 
             ...mapGetters('Select', [
