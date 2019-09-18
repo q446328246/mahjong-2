@@ -118,48 +118,6 @@ const actions = {
         router.push({name: 'Select', params: {id: payload}})
     },
 
-    async setSelectQuestionAndResults({ commit,state }, payload) {
-        await axios.get('/get_wining_qa/' + state.level).then(function(response) {
-
-            if (Array.isArray(response.data)) {
-                // 正常
-                let QA = response.data
-                let questions = []
-                let answers = []
-
-                // apiで取得したデータをquestionと問題に対するanswerに分けて、それぞれの配列を作成し、stateへ
-                for (var i = 0; i < Object.keys(QA).length; i++) {
-                    var tmp_ans = []
-                    questions.push(QA[i].question)
-                    for (var j = 0;j < Object.keys(QA[i].answer).length; j++) {
-                        if (QA[i].question.question_key == QA[i].answer[j].question_key) {
-                            // 問題に対する答えの番号を保持
-                            if (QA[i].answer[j].correct === 1) commit('setAnswerNum', j+1)
-                            tmp_ans.push(QA[i].answer[j])
-                        }
-                    }
-                    answers.push(tmp_ans)
-                }
-
-                commit('setQuestions',  questions)
-                commit('setAnswers',  answers)
-            } else {
-                // URLパラメータエラー
-                commit('setError', response.data)
-                router.push({name: 'Top'})
-            }
-        }.bind(this))
-        .catch(function (error) {
-            // 異常
-            console.log('ERROR!! occurred in Backend.')
-            console.log(error)
-        }.bind(this))
-    },
-
-    setQuestionAmt({ commit, state }) {
-        commit('setQuestionAmt', router.currentRoute.params.id)
-    },
-
     pickedAns({ commit,state }, payload) {
         commit('setAnsPicked', payload)
     },
@@ -219,13 +177,10 @@ const actions = {
         })
     },
 
-    setPickedHaiComment ({ commit,state,dispatch }) {
-        commit('incrimentQuestionCnt')
-        commit('changeStatus')
-        commit('clearAnsPicked')
-        if (state.level === 2) {
-            dispatch('setTimer')
-        }
+    async getPickedHaiComment ({ commit,state,dispatch }, picked_hai) {
+        await axios.get('/get_select_comment' + state.question_id + '/' + picked_hai).then(function(response) {
+
+        })
     },
 
     moveResult () {

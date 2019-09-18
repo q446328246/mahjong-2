@@ -151,7 +151,7 @@
                         <button
                             type="button"
                             class="btn btn-primary"
-                            @click="showComment"
+                            @click="showComment(Answer.hai)"
                         >コメントを見る</button>
                     </div>
                 </div>
@@ -202,9 +202,11 @@
                         class_name="wining_ans"
                 ></HaiComp>
 
-                <div class="comment" v-for="">
+                <pre v-for="">
+                    <div class="comment">
 
-                </div>
+                    </div>
+                </pre>
 
                 <button
                         type="button"
@@ -251,21 +253,19 @@
 
         methods: {
             ...mapActions('Select', [
-                'answerAction'
+                'answerAction',
+                'getPickedHaiComment'
             ]),
 
              Answer: function () {
                 this.status = 1
                 this.answerAction(this.comment)
-                this.closeModal()
+                 this.modal = false
             },
 
-            closeModal() {
-                this.modal = false
-            },
-
-            showComment() {
-
+            showComment(picked_hai) {
+                this.getPickedHaiComment(picked_hai)
+                this.comment_modal = true
             }
         },
 
