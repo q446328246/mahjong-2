@@ -133,12 +133,12 @@
                 <div
                     v-for="(Answer, index) in selectResultAnswers"
                     :key="index"
-                    class="row"
+                    class="row mb-2"
                 >
                     <div class="col-2">
                         第{{ index + 1 }}位
                     </div>
-                    <div class="col-6">
+                    <div class="col-4">
                     <HaiComp
                         :tile=Answer.hai
                         class_name="select-kawa"
@@ -147,7 +147,7 @@
                     <div class="col-2">
                         {{ Answer.count }}票
                     </div>
-                    <div class="col-2" v-if="Answer.is_comment">
+                    <div class="col-4" v-if="Answer.is_comment">
                         <button
                             type="button"
                             class="btn btn-primary"
@@ -165,13 +165,13 @@
             <a href="/select_tile/top" class="btn btn-primary">TOPに戻る</a>
             <button
                 v-if="status == 0 && ans_picked !== ''"
-                @click="modal = true"
+                @click="answer_modal = true"
                 type="button"
                 class="btn btn-primary">回答</button>
         </div>
 
         <!--　解答時、モーダルウィンドウコンポーネント -->
-        <ModalComp @close="closeModal" v-if="modal">
+        <ModalComp @close="answer_modal = false" v-if="answer_modal">
             <h3 slot="header">選択牌理由</h3>
             <div slot="body">
                 選んだ牌
@@ -193,24 +193,24 @@
         </ModalComp>
 
         <!-- コメント表示時、モーダルウィンドウコンポーネント -->
-        <ModalComp @close="closeCommentModal" v-if="comment_modal">
+        <ModalComp @close="comment_modal = false" v-if="comment_modal">
             <h3 slot="header">投票コメント</h3>
             <div slot="body">
                 選んだ牌
                 <HaiComp
-                        :tile=tehai_tiles[ans_picked]
+                        :tile=picked_comment_tile
                         class_name="wining_ans"
                 ></HaiComp>
 
-                <pre v-for="">
-                    <div class="comment">
-
+                <div v-for="(Comment, index) in selectHaiComments">
+                    <div class="comment_index">
+                        ・{{ Comment.comment }}
                     </div>
-                </pre>
+                </div>
 
                 <button
                         type="button"
-                        class="btn btn-warning"
+                        class="btn btn-warning close-btn"
                         @click="comment_modal = false">
                     閉じる
                 </button>
@@ -244,10 +244,11 @@
         data: function() {
             return {
                 status: 0,
-                modal: false,
+                answer_modal: false,
                 comment_modal:false,
                 // modal: true,
                 comment: '',
+                picked_comment_tile: ''
             }
         },
 
@@ -260,10 +261,11 @@
              Answer: function () {
                 this.status = 1
                 this.answerAction(this.comment)
-                 this.modal = false
+                 this.answer_modal = false
             },
 
             showComment(picked_hai) {
+                this.picked_comment_tile = picked_hai
                 this.getPickedHaiComment(picked_hai)
                 this.comment_modal = true
             }
@@ -275,7 +277,8 @@
                 'selectQuestionDetail',
                 'ans_picked',
                 'chart_render',
-                'selectResultAnswers'
+                'selectResultAnswers',
+                'selectHaiComments'
             ]),
 
             ...mapGetters('Select', [
@@ -407,6 +410,15 @@
         margin-top: 10px;
     }
 
+    .comment_index {
+        padding: 10px 20px;
+        border-bottom: 1px solid #999999;
+        text-align: left;
+    }
+
+    .btn.close-btn {
+        margin-top: 15px;
+    }
 
     /* SP */
     @media screen and (min-width: 300px) and (max-width: 760px){

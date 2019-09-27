@@ -19,7 +19,7 @@ export const state = {
         ],
     },
     chart_render: false,
-    selectResultComment :[],
+    selectHaiComments :[],
     selectResultAnswers: [],
 }
 
@@ -51,6 +51,9 @@ const mutations = {
     },
     setChartRender(state, bool) {
         state.chart_render = bool
+    },
+    setSelectHaiComment(state, Comment) {
+        state.selectHaiComments = Comment
     },
     setSelectResultAnswer(state, ResultAnswer) {
         state.selectResultAnswers = ResultAnswer
@@ -178,8 +181,12 @@ const actions = {
     },
 
     async getPickedHaiComment ({ commit,state,dispatch }, picked_hai) {
-        await axios.get('/get_select_comment' + state.question_id + '/' + picked_hai).then(function(response) {
-
+        await axios.get('/get_select_comment/' + state.question_id + '/' + picked_hai).then(function(response) {
+            if (response.data !== false) {
+                commit('setSelectHaiComment', response.data)
+            } else {
+                alert('エラーが発生しました。再度、お試しください。')
+            }
         })
     },
 

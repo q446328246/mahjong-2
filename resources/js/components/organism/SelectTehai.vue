@@ -81,5 +81,8 @@
         padding: 3% 0;
     }
 
+    .tehai {
+        margin-bottom: 30px;
+    }
 
 </style>
