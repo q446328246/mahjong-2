@@ -129,22 +129,27 @@ class ApiController extends Controller
 
         return $response;
     }
-    public function tstSelectAnswer(Request $request) {
-        $subQuery = DB::table('select_tile_results')
-            ->select('answer as hai', DB::raw("'true' as is_comment"))
-            ->where('display', '=', 1)
-            ->whereNotNull('comment');
 
-        $response = DB::table('select_tile_results')
-            ->select('answer as hai', DB::raw('count(answer) as count'), 'b.is_comment')
-            ->leftJoinSub(
-                $subQuery, 'b', function($join) {
-                $join->on('select_tile_results.answer', '=', 'b.hai');
-            })
-//            ->where('question_id', '=', $request['question']['id'])
-            ->groupBy('answer')
-            ->orderBy('count', 'desc')
-            ->get();
-        dd($response);
+    public function getSelectComment(Request $request, $id, $hai) {
+        try {
+            $response = DB::table('select_tile_results')
+                ->select('comment')
+                ->where('question_id', '=', $id)
+                ->where('answer', '=', $hai)
+                ->where('display', '=', 1)
+                ->whereNotNull('comment')
+                ->orderBy('updated_at', 'desc')
+                ->get()
+            ;
+
+
+        } catch (\Exception $e) {
+            Log::warning($e->getMessage());
+
+            $response = false;
+        }
+
+
+        return $response;
     }
 }
