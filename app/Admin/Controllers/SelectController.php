@@ -130,7 +130,10 @@ class SelectController extends AdminController
         $form->text('title', '問題名');
         $form->text('introduction', '紹介文');
 
-
+        $form->hasOne('select_tile_question_detail', function (Form\NestedForm $form) {
+            $form->text('stations', '局.本場');
+            $form->text('place', '場所');
+        });
 
         $form->display('created_at', __('Created At'));
         $form->display('updated_at', __('Updated At'));
