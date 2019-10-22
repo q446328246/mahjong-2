@@ -21,7 +21,9 @@ Route::middleware('auth:api')->get('/user', function (Request $request) {
     return $request->user();
 });
 
-Route::get('qa.json/{id}', 'QAController@index');
+Route::get('get_wining_qa/{level}/{volume}', 'ApiController@getWiningQA');
+Route::get('get_select_questions', 'ApiController@getSelectTopQuestions');
+Route::get('get_select_question_detail/{id}', 'ApiController@getSelectQuestionDetail');
 
 
 Route::group(['middleware' => 'api'],function(){
