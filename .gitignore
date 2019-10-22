@@ -1,9 +1,11 @@
 /node_modules
+/nuxt/node_modules
 /public/hot
 /public/storage
 /public/vendor
 /vendor
 .env
+/nuxt/.env
 .phpunit.result.cache
 Homestead.json
 Homestead.yaml
