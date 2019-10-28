@@ -1,6 +1,7 @@
 <template>
     <div>
-        <Header text="麻雀上達ゲーム"></Header>
+<!--        <Header text="麻雀上達ゲーム"></Header>-->
+        <Header text="test"></Header>
 
         <div class="container">
             <div>
@@ -19,7 +20,8 @@
             </div>
 
             <div>
-                <a href="/select_tile/top" class="btn btn-info">問題を選ぶ</a>
+                <nuxt-link to="/select" class="btn btn-info">問題を選ぶ</nuxt-link>
+<!--                <a href="/select_tile/top" class="btn btn-info">問題を選ぶ</a>-->
             </div>
             <hr>
         </div>
@@ -31,7 +33,7 @@
     import { mapActions } from 'vuex'
 
     export default {
-        name: "Top",
+        name: "index",
 
         created() {
             this.clearState()

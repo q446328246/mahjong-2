@@ -27,7 +27,7 @@
     import { mapState, mapActions } from 'vuex'
 
     export default {
-        name: "Wining",
+        name: "Wining-id",
         components: {
             Header,WiningQuestionComp,WiningAnswerComp
         },

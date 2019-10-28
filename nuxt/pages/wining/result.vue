@@ -21,7 +21,7 @@
     import { mapState, mapGetters } from 'vuex'
 
     export default {
-        name: "Wining",
+        name: "wining-result",
         components: {
             Header,WiningResultHaipaiComp
         },

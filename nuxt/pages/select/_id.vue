@@ -150,7 +150,7 @@
     import { mapState, mapActions, mapGetters } from 'vuex'
 
     export default {
-        name: "Select",
+        name: "select-id",
         components: {
             Header,HaipaiComp,HaiComp, KawahaiComp
         },

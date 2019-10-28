@@ -145,7 +145,7 @@ export const getters = {
 export const actions = {
     letsWiningTile({ commit,state }, payload) {
         commit('setLevel', payload)
-        this.$router.push({name: 'Wining', params: {level: payload}})
+        this.$router.push({name: 'wining-id', params: {level: payload}})
     },
 
     async createWiningQuestions({ commit,state }, payload) {
@@ -245,7 +245,7 @@ export const actions = {
     },
 
     moveResult () {
-        this.$router.push({name: 'WiningResult'})
+        this.$router.push({name: 'wining-result'})
     },
 
     setTimer({ commit,state,dispatch }) {
