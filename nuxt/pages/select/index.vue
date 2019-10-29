@@ -1,6 +1,7 @@
 <template>
     <div>
-        <Header text="どれを切る？"></Header>
+<!--        <Header text="どれを切る？"></Header>-->
+        <Header text="test"></Header>
         <div>
             問題を選択してください
         </div>
@@ -28,14 +29,9 @@
     import { mapActions,mapState } from 'vuex'
 
     export default {
-        name: "SelectTop",
+        name: "select-top",
         components: {
             Header,
-        },
-
-        data: function() {
-            return {
-            }
         },
 
         async created() {

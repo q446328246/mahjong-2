@@ -44,10 +44,11 @@ export const mutations = {
 // actions
 export const actions = {
     async getSelectTopQuestions({ commit }) {
-        await axios.get('/get_select_questions').then(function(response) {
-            if (Array.isArray(response.data)) {
+        await this.$axios.$get(process.env.AXIOS_URL + '/get_select_questions').then(function(response) {
+            console.log(response)
+            if (Array.isArray(response)) {
                 // 正常
-                let SelectTileQuestions = response.data
+                let SelectTileQuestions = response
                 let questions = []
                 let answer_cnt = []
 
@@ -61,8 +62,8 @@ export const actions = {
                 commit('setAnswerCnt',  answer_cnt)
             } else {
                 // URLパラメータエラー
-                commit('setError', response.data)
-                router.push({name: 'Top'})
+                commit('setError', response )
+                this.$router.push({name: 'index'})
             }
         }.bind(this))
         .catch(function (error) {
@@ -83,14 +84,14 @@ export const actions = {
             }
         }
 
-        await axios.get('/get_select_question_detail/' + state.question_id).then(function(response) {
+        await this.$axios.$get(process.env.AXIOS_URL + '/get_select_question_detail/' + state.question_id).then(function(response) {
             if (Array.isArray(response.data)) {
                 // 正常
                 commit('setSelectQuestionDetail',  response.data[0])
             } else {
                 // URLパラメータエラー
                 commit('setError', response.data)
-                router.push({name: 'Top'})
+                this.$router.push({name: 'Top'})
             }
         }.bind(this))
             .catch(function (error) {
@@ -99,11 +100,11 @@ export const actions = {
                 console.log(error)
             }.bind(this))
 
-        router.push({name: 'Select', params: {id: payload}})
+        this.$router.push({name: 'select', params: {id: payload}})
     },
 
     async setSelectQuestionAndResults({ commit,state }, payload) {
-        await axios.get('/get_wining_qa/' + state.level).then(function(response) {
+        await this.$axios.$get(process.env.AXIOS_URL + '/get_wining_qa/' + state.level).then(function(response) {
 
             if (Array.isArray(response.data)) {
                 // 正常
@@ -130,7 +131,7 @@ export const actions = {
             } else {
                 // URLパラメータエラー
                 commit('setError', response.data)
-                router.push({name: 'Top'})
+                this.$router.push({name: 'index'})
             }
         }.bind(this))
         .catch(function (error) {
@@ -230,19 +231,6 @@ export const getters = {
             return eval('state.selectQuestionDetail.' + key).split('.')
         }
     },
-
-    // splitTehaiTiles: (state, getters) => key =>  {
-    //     let arrTiles = getters.splitTiles('tehai')
-    //     let tumo_hai = arrTiles[arrTiles.length-1].split(' ')
-    //     console.log(tumo_hai[1])
-    //     console.log(arrTiles)
-    //     let tehai_tiles = arrTiles.push(tumo_hai[1])
-    //
-    //     console.log(tehai_tiles)
-    //
-    //     return tehai_tiles
-    //
-    // },
 
     getPlaceAndStation(state)  {
         if (state.selectQuestionDetail !== undefined && state.selectQuestionDetail !== '') {
