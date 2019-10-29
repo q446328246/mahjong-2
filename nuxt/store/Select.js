@@ -45,7 +45,6 @@ export const mutations = {
 export const actions = {
     async getSelectTopQuestions({ commit }) {
         await this.$axios.$get(process.env.AXIOS_URL + '/get_select_questions').then(function(response) {
-            console.log(response)
             if (Array.isArray(response)) {
                 // 正常
                 let SelectTileQuestions = response
@@ -85,13 +84,13 @@ export const actions = {
         }
 
         await this.$axios.$get(process.env.AXIOS_URL + '/get_select_question_detail/' + state.question_id).then(function(response) {
-            if (Array.isArray(response.data)) {
+            if (Array.isArray(response)) {
                 // 正常
-                commit('setSelectQuestionDetail',  response.data[0])
+                commit('setSelectQuestionDetail',  response[0])
             } else {
                 // URLパラメータエラー
                 commit('setError', response.data)
-                this.$router.push({name: 'Top'})
+                this.$router.push({name: 'index'})
             }
         }.bind(this))
             .catch(function (error) {
@@ -100,7 +99,7 @@ export const actions = {
                 console.log(error)
             }.bind(this))
 
-        this.$router.push({name: 'select', params: {id: payload}})
+        this.$router.push({name: 'select-id', params: {id: payload}})
     },
 
     async setSelectQuestionAndResults({ commit,state }, payload) {
@@ -227,7 +226,7 @@ export const actions = {
 // getters
 export const getters = {
     splitTiles: state => key =>  {
-        if (eval('state.selectQuestionDetail.' + key) !== null) {
+        if (eval('state.selectQuestionDetail.' + key) !== null && eval('state.selectQuestionDetail.' + key) !== undefined) {
             return eval('state.selectQuestionDetail.' + key).split('.')
         }
     },

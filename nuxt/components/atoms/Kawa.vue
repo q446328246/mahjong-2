@@ -9,7 +9,7 @@
 </template>
 
 <script>
-    import constant from '../../constants/constant'
+    import constant from '@constants/constant.js'
 
     export default {
         name: "Kawa",
@@ -18,7 +18,7 @@
 
         computed: {
             tile_img: function () {
-                return constant.tiles_img_path + this.tile + '.png'
+                return process.env.LARAVEL_URL + constant.tiles_img_path + this.tile + '.png'
             },
             
             newLine: function () {

@@ -33,6 +33,7 @@ export default {
     ** Plugins to load before mounting the App
     */
     plugins: [
+        { src: 'plugins/localStorage.js', ssr: false },
     ],
     /*
     ** Nuxt.js dev-modules
@@ -69,7 +70,7 @@ export default {
             new webpack.ProvidePlugin({
                 jQuery: 'jquery',
                 $: 'jquery'
-            })
+            }),
         ],
 
         extractCSS: true
@@ -81,19 +82,23 @@ export default {
     },
     proxy: {
         '/api/': { target: 'http://127.0.0.1:8000', pathRewrite: {'^/api/': ''} }
-    }
+    },
+     vue: {
+       devtools: true
+     },
 }
 
-// module.exports = {
-//     dev: (process.env.NODE_ENV !== 'production'),
-//     modules: [
-//     ],
-//     proxy: {
-//         '/api/': {
-//             // target: (this.dev) ? 'http://127.0.0.1:8000' : 'https://production-url'
-//             target:  'http://127.0.0.1:8000'
-//         }
-//     },
-//     axios: {
-//     },
-// }
+module.exports = {
+    // dev: (process.env.NODE_ENV !== 'production'),
+    // modules: [
+    // ],
+    // proxy: {
+    //     '/api/': {
+    //         // target: (this.dev) ? 'http://127.0.0.1:8000' : 'https://production-url'
+    //         target:  'http://127.0.0.1:8000'
+    //     }
+    // },
+    // axios: {
+    // },
+    plugins: [{ src: '~/plugins/localStorage.js', ssr: false }]
+}

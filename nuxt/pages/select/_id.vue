@@ -136,7 +136,7 @@
         </div>
 
         <div class="btn-box">
-            <a href="/select_tile/top" class="btn btn-primary">TOPに戻る</a>
+            <nuxt-link to="/select" class="btn btn-primary">TOPに戻る</nuxt-link>
         </div>
     </div>
 </template>
