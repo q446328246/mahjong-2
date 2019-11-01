@@ -13,4 +13,7 @@ Route::group([
     $router->get('/', 'HomeController@index')->name('admin.home');
     $router->resource('/wining/lv1', WiningController::class);
 
+
+    $router->resource('/select', SelectController::class);
+
 });

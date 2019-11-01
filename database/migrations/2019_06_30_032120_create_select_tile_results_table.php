@@ -21,6 +21,7 @@ class CreateSelectTileResultsTable extends Migration
             $table->boolean('display');
             $table->foreign('question_id')->references('id')->on('select_tile_questions_lists'); // 外部キー
             $table->timestamps();
+            $table->softDeletes();
         });
     }
 

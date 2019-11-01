@@ -122,51 +122,163 @@
 
 
 
-        <div class="tehai">
-            <HaipaiComp
-                :tiles=tehai_tiles
-                class_name="select-tehai"
-            ></HaipaiComp>
+        <SelectTehaiComp
+            :tehai_tiles=tehai_tiles
+        ></SelectTehaiComp>
 
-            <p>ツモ牌</p>
-            <HaiComp
-                :tile=selectQuestionDetail.tumo_tile
-                class_name="select-dora"
-            ></HaiComp>
+
+        <!-- 解答フィールド -->
+        <div v-if="status == 1" class="container">
+            <div>
+                <div
+                    v-for="(Answer, index) in selectResultAnswers"
+                    :key="index"
+                    class="row mb-2"
+                >
+                    <div class="col-2">
+                        第{{ index + 1 }}位
+                    </div>
+                    <div class="col-4">
+                    <HaiComp
+                        :tile=Answer.hai
+                        class_name="select-kawa"
+                    ></HaiComp>
+                    </div>
+                    <div class="col-2">
+                        {{ Answer.count }}票
+                    </div>
+                    <div class="col-4" v-if="Answer.is_comment">
+                        <button
+                            type="button"
+                            class="btn btn-primary"
+                            @click="showComment(Answer.hai)"
+                        >コメントを見る</button>
+                    </div>
+                </div>
+            </div>
+            <SelectResultChartComp
+                v-if="chart_render"
+            ></SelectResultChartComp>
         </div>
 
         <div class="btn-box">
             <a href="/select_tile/top" class="btn btn-primary">TOPに戻る</a>
+            <button
+                v-if="status == 0 && ans_picked !== ''"
+                @click="answer_modal = true"
+                type="button"
+                class="btn btn-primary">回答</button>
         </div>
+
+        <!--　解答時、モーダルウィンドウコンポーネント -->
+        <ModalComp @close="answer_modal = false" v-if="answer_modal">
+            <h3 slot="header">選択牌理由</h3>
+            <div slot="body">
+                選んだ牌
+                <HaiComp
+                    :tile=tehai_tiles[ans_picked]
+                    class_name="wining_ans"
+                ></HaiComp>
+
+                <textarea v-model="comment" class="form-control mb-2" rows="3" placeholder="選んだ牌の理由を記入してください。（任意）"></textarea>
+
+                <button
+                    type="button"
+                    class="btn btn-warning"
+                    @click="Answer">
+                    回答
+                </button>
+            </div>
+            <!-- /footer -->
+        </ModalComp>
+
+        <!-- コメント表示時、モーダルウィンドウコンポーネント -->
+        <ModalComp @close="comment_modal = false" v-if="comment_modal">
+            <h3 slot="header">投票コメント</h3>
+            <div slot="body">
+                選んだ牌
+                <HaiComp
+                        :tile=picked_comment_tile
+                        class_name="wining_ans"
+                ></HaiComp>
+
+                <div v-for="(Comment, index) in selectHaiComments">
+                    <div class="comment_index">
+                        ・{{ Comment.comment }}
+                    </div>
+                </div>
+
+                <button
+                        type="button"
+                        class="btn btn-warning close-btn"
+                        @click="comment_modal = false">
+                    閉じる
+                </button>
+            </div>
+            <!-- /footer -->
+        </ModalComp>
     </div>
 </template>
 
 <script>
     import 'es6-promise/auto'
+    import SelectTehaiComp from '../organism/SelectTehai'
+    import SelectResultChartComp from '../organism/SelectResultChart'
     import Header from '../molecules/header'
     import HaipaiComp from '../molecules/Haipai'
     import KawahaiComp from '../molecules/Kawahai'
     import HaiComp from '../atoms/Hai'
+    import ModalComp from '../atoms/Modal'
     import { mapState, mapActions, mapGetters } from 'vuex'
 
     export default {
         name: "Select",
         components: {
-            Header,HaipaiComp,HaiComp, KawahaiComp
+            SelectResultChartComp,SelectTehaiComp, Header, HaipaiComp, HaiComp, KawahaiComp,ModalComp
         },
 
         created() {
+            this.status = 0
+        },
 
+        data: function() {
+            return {
+                status: 0,
+                answer_modal: false,
+                comment_modal:false,
+                // modal: true,
+                comment: '',
+                picked_comment_tile: ''
+            }
         },
 
         methods: {
             ...mapActions('Select', [
+                'answerAction',
+                'getPickedHaiComment'
             ]),
+
+             Answer: function () {
+                this.status = 1
+                this.answerAction(this.comment)
+                 this.answer_modal = false
+            },
+
+            showComment(picked_hai) {
+                this.picked_comment_tile = picked_hai
+                this.getPickedHaiComment(picked_hai)
+                this.comment_modal = true
+            }
         },
 
         computed: {
             ...mapState('Select', [
-                'selectQuestion', 'selectQuestionDetail'
+                'selectQuestion',
+                'selectQuestionDetail',
+                'ans_picked',
+                'chart_render',
+                'selectResultAnswers',
+                'selectHaiComments'
             ]),
 
             ...mapGetters('Select', [
@@ -268,7 +380,7 @@
     .kawa.kami {
         position: absolute;
         top: 35%;
-        left: -8%;
+        left: -4%;
         width: 50%;
     }
     .kawa.me {
@@ -280,7 +392,7 @@
     .kawa.shimo {
         position: absolute;
         top: 35%;
-        right: -8%;
+        left: 52%;
         width: 50%;
     }
 
@@ -298,6 +410,15 @@
         margin-top: 10px;
     }
 
+    .comment_index {
+        padding: 10px 20px;
+        border-bottom: 1px solid #999999;
+        text-align: left;
+    }
+
+    .btn.close-btn {
+        margin-top: 15px;
+    }
 
     /* SP */
     @media screen and (min-width: 300px) and (max-width: 760px){

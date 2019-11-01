@@ -34,7 +34,7 @@
 
     .wining_ans {
         width: 10%;
-        margin: 0 10px;
+        margin: 5px 10px;
     }
 
     .select-naki {

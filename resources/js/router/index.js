@@ -1,8 +1,8 @@
 import Vue from 'vue'
 import VueRouter from 'vue-router';
 import Top from '../components/Pages/Top'
-import Wining from '../components/Pages/Wining'
-import WiningResult from '../components/Pages/WiningResult'
+import Wining from '../components/pages/wining/_id'
+import WiningResult from '../components/pages/wining/result'
 import SelectTop from '../components/Pages/SelectTop'
 import Select from '../components/Pages/Select'
 

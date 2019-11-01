@@ -42,11 +42,6 @@
             'answers',
         ],
 
-        data: function() {
-            return {
-            }
-        },
-
         created() {
         },
 
@@ -89,8 +84,6 @@
             ...mapState('Wining', [
                 'status', 'ans_num', 'ans_picked', 'question_now_cnt'
             ]),
-
-
         }
 
     }
