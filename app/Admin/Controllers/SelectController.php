@@ -89,8 +89,16 @@ class SelectController extends AdminController
     {
         $grid = new Grid(new SelectTileQuestionsList());
 
-        $grid->column('id', __('ID'))->sortable();
+        $grid->column('id', __('ID'))->sortable()
+        ->expand(function ($model) {
+            $detail = $model->select_tile_question_detail->toArray();
 
+//            $detail = $model->select_tile_question_detail->only(['stations', 'place', 'dora']);
+            dump($detail);
+            return new Table([], $detail);
+        });
+        $grid->column('title', '問題名');
+        $grid->column('introduction', '紹介文');
 
         $grid->column('created_at', __('Created at'));
         $grid->column('updated_at', __('Updated at'));
